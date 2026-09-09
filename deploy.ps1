@@ -1,6 +1,6 @@
 # 1. Direct Release Link
-$DownloadUrl = "https://github.com/RexPester/C1Desk-Deployment/releases/download/v1.4.9/C1_RustDesk.exe"
-$InstallerPath = "$env:TEMP\C1_RustDesk.exe"
+$DownloadUrl = "https://github.com/RexPester/C1Desk-Deployment/releases/latest/download/C1Desk.exe"
+$InstallerPath = "$env:TEMP\C1Desk.exe"
 
 # 2. Download Installer Over HTTPS
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
