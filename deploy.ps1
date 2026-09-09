@@ -6,31 +6,45 @@ $InstallerPath = "$env:TEMP\C1_RustDesk.exe"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest -Uri $DownloadUrl -OutFile $InstallerPath -UseBasicParsing
 
-# 3. Stop Existing Services & Processes
-Stop-Service -Name "RustDesk" -ErrorAction SilentlyContinue
-Get-Process -Name "rustdesk" -ErrorAction SilentlyContinue | Stop-Process -Force
+# 3. Explicitly Uninstall Previous Builds
+$OldExecutables = @(
+    "${env:ProgramFiles}\RustDesk\rustdesk.exe",
+    "${env:ProgramFiles}\C1Desk\C1Desk.exe",
+    "${env:ProgramFiles}\C1Desk\rustdesk.exe",
+    "${env:ProgramFiles}\C1_RustDesk\C1_RustDesk.exe",
+    "${env:ProgramFiles(x86)}\RustDesk\rustdesk.exe",
+    "${env:ProgramFiles(x86)}\C1Desk\C1Desk.exe"
+)
 
-Stop-Service -Name "C1_RustDesk" -ErrorAction SilentlyContinue
-Get-Process -Name "C1_RustDesk" -ErrorAction SilentlyContinue | Stop-Process -Force
+foreach ($exe in $OldExecutables) {
+    if (Test-Path $exe) {
+        Start-Process -FilePath $exe -ArgumentList "--uninstall" -Wait -NoNewWindow -ErrorAction SilentlyContinue
+    }
+}
 
-Stop-Service -Name "C1Desk" -ErrorAction SilentlyContinue
-Get-Process -Name "C1Desk" -ErrorAction SilentlyContinue | Stop-Process -Force
+# 4. Stop Remaining Services & Processes
+Stop-Service -Name "RustDesk", "C1_RustDesk", "C1Desk" -ErrorAction SilentlyContinue
+taskkill /F /IM "rustdesk.exe" /T 2>$null
+taskkill /F /IM "C1_RustDesk.exe" /T 2>$null
+taskkill /F /IM "C1Desk.exe" /T 2>$null
 
-# 4. Clear Stale Configurations to Enforce Hostname ID & Locks
-Remove-Item -Path "$env:APPDATA\RustDesk\config" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item -Path "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\RustDesk\config" -Recurse -Force -ErrorAction SilentlyContinue
+# 5. Clear Stale Configurations
+$ConfigPaths = @(
+    "$env:APPDATA\RustDesk\config",
+    "$env:APPDATA\C1Tech-Support\config",
+    "$env:APPDATA\C1Desk\config",
+    "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\RustDesk\config",
+    "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\C1Tech-Support\config",
+    "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\C1Desk\config"
+)
 
-Remove-Item -Path "$env:APPDATA\C1Tech-Support\config" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item -Path "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\C1Tech-Support\config" -Recurse -Force -ErrorAction SilentlyContinue
+foreach ($path in $ConfigPaths) {
+    Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+}
 
-Remove-Item -Path "$env:APPDATA\C1Desk\config" -Recurse -Force -ErrorAction SilentlyContinue
-Remove-Item -Path "C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\C1Desk\config" -Recurse -Force -ErrorAction SilentlyContinue
-
-# 5. Run Silent Installation & Cleanup
+# 6. Run Silent Installation & Cleanup
 Start-Process -FilePath $InstallerPath -ArgumentList "--silent-install" -Wait -NoNewWindow
 Remove-Item -Path $InstallerPath -Force -ErrorAction SilentlyContinue
 
-# 6. Ensure Service Is Started (Check all potential service names)
-Start-Service -Name "RustDesk" -ErrorAction SilentlyContinue
-Start-Service -Name "C1_RustDesk" -ErrorAction SilentlyContinue
-Start-Service -Name "C1Desk" -ErrorAction SilentlyContinue
+# 7. Ensure Service Is Started
+Start-Service -Name "RustDesk", "C1_RustDesk", "C1Desk" -ErrorAction SilentlyContinue
