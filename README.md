@@ -1,6 +1,7 @@
 # C1Desk-Deployment
 C1Desk Deployment Client is a Rustdesk client with C1desk skin.
-its easy to generate and removes the need to manually set configuration for every client.
+its easy to generate and removes the need to manually set configuration for every client. for automatic installation download the C1Desk-installer-updater and launch it 
+the installer/updater will remove old rustdesk and c1desk client and their configuration file and then download the latest version of C1Desk from this repository.
 ## Client generation
 to keep the C1Desk client updated a new one needs to be made every time that there is a new rustdesk release
 Go to https://rdgen.crayoneater.org/ select the latest version of rustde-sk
