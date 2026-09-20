@@ -19,4 +19,18 @@ Go to https://rdgen.crayoneater.org/ select the latest version of rustde-sk
 - Custom URL for downloading updates: https://c1tech.co/
 - Company name for copyright: C1Tech
 #### Security
-- Password Approve mode:
+- Password Approve mode: accepts both
+- Set Permanent Password: *Password must be set! ask administrator*
+- keep other setting off by default
+#### Visual 
+For logo use the C1desk logo located at Local-NAS\Public\logo and set the theme to DARK on override
+#### Permissions and other 
+- Keep the Default setting only turn on remote configuration modification
+- ****Other default setting****:
+- allow-hostname-as-id=Y
+- disable-settings=Y
+- disable-security-settings=Y
+- ****Other Override settings****:
+- pre-elevate-service=Y
+- stop-service-when-user-logout=N
+Put these codes into the other tab
