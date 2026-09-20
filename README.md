@@ -34,3 +34,49 @@ For logo use the C1desk logo located at Local-NAS\Public\logo and set the theme 
 - pre-elevate-service=Y
 - stop-service-when-user-logout=N
 Put these codes into the other tab
+## Customizing & Compiling the Installer
+
+Follow these steps if you need to modify the deployment script (e.g., changing download URLs, process names, or cleanup paths) and recompile it into a standalone executable.
+Step 1: Edit deploy.ps1
+
+Open deploy.ps1 in VS Code or any text editor to customize the installer behavior:
+
+    Update Release Link: Modify $DownloadUrl to point to your release binary:
+    PowerShell
+
+    $DownloadUrl = "https://github.com/YourOrg/C1Desk-Deployment/releases/latest/download/C1Desk.exe"
+
+    Manage Target Services & Processes: Update $ServiceNames or $ProcessNames if your custom build uses different names.
+
+    Add Config Cleanup Paths: Add any extra folder paths to $ConfigPaths if you want to wipe additional cache directories during upgrades.
+
+Step 2: Install the Compiler
+
+Compilation requires the ps2exe PowerShell module. Open PowerShell as Administrator and run:
+PowerShell
+
+- Install-Module -Name ps2exe -Scope CurrentUser -Force
+
+Step 3: Compile deploy.ps1 into .exe
+
+Open PowerShell in the folder containing deploy.ps1 and execute:
+PowerShell
+
+Invoke-PS2EXE -InputFile ".\deploy.ps1" -OutputFile ".\C1Desk-Setup.exe" -requireAdmin -noConsole
+
+Flag Explanations:
+
+    -requireAdmin: Embeds a manifest that forces Windows to automatically prompt for Administrator privileges when double-clicked.
+
+    -noConsole: Hides the black PowerShell window during execution for a silent, professional install.
+
+    -iconFile ".\icon.ico" (Optional): Pass a path to an .ico file to brand the generated installer binary with your logo.
+
+Step 4: Test & Distribute
+
+    Test Execution: Run C1Desk-Setup.exe on a clean test environment to verify that old clients are removed, services restart, and desktop shortcuts appear.
+
+    Publish: Attach the compiled C1Desk-Setup.exe to your GitHub Releases page or software distribution point.
+## C1Desk ID Changer 
+the ID Changer is copied and slightly modified from the https://github.com/abdullah-erturk/RustDesk-ID-Server-Changer repository.
+the functionality of id change as hostname and 9 random digit id is confirmed the rest must be tested.
