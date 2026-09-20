@@ -80,3 +80,4 @@ Step 4: Test & Distribute
 ## C1Desk ID Changer 
 the ID Changer is copied and slightly modified from the https://github.com/abdullah-erturk/RustDesk-ID-Server-Changer repository.
 the functionality of id change as hostname and 9 random digit id is confirmed the rest must be tested.
+NOTE: since the name of the application and the directories are different from rustdesk tools like rustdesk id changer need to be modified to work with them!
