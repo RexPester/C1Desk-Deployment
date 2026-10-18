@@ -16,14 +16,14 @@ Go to https://rdgen.crayoneater.org/ select the latest version of rustde-sk
 #### Custom Server
 - Host: rustdesk.c1tech.group
 - Port:
-- Key: *Ask Administrator!*
+- Key: *Ask Administrator*
 - API: rustdesk.c1tech.group:21114
 - Custom URL for links: https://c1tech.co/
 - Custom URL for downloading updates: https://c1tech.co/
 - Company name for copyright: C1Tech
 #### Security
 - Password Approve mode: accepts both
-- Set Permanent Password: *Password must be set! ask administrator*
+- Set Permanent Password: *Password must be set, ask administrator*
 - keep other setting off by default
 #### Visual 
 For logo use the C1desk logo located at Local-NAS\Public\logo and set the theme to DARK on override
