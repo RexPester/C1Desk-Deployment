@@ -14,10 +14,10 @@ Go to https://rdgen.crayoneater.org/ select the latest version of rustde-sk
 - Disable Installation: YES
 - Disable Settings: YES
 #### Custom Server
-- Host: rustdesk.c1tech.group
+- Host: *Ask Administrator*
 - Port:
 - Key: *Ask Administrator*
-- API: rustdesk.c1tech.group:21114
+- API: *Ask Administrator*
 - Custom URL for links: https://c1tech.co/
 - Custom URL for downloading updates: https://c1tech.co/
 - Company name for copyright: C1Tech
